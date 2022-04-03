@@ -1,0 +1,46 @@
+.gameScreen {
+	margin: auto;
+	background-color: rgba(0, 0, 153, .4);
+	padding:  20px 20px;
+	display: block;
+	border-radius: 25px;
+
+}
+
+.center {
+	width:  100%;
+	margin: auto;
+}
+
+.titleText {
+	width: 1024px;
+	margin: 10px auto;
+	padding:  20px 20px;
+	text-align: left;
+	color: royalblue;
+}
+
+.bodyText {
+	width: 1024px;
+	overflow: hidden;
+	background-color: rgba(25, 25, 255, 0.3);
+	color: royalblue;
+	margin-top: 20px;
+	padding: 0px 20px;
+}
+
+
+.bodyText a {
+	color: lightblue;
+}
+
+.bodyText a:hover {
+	color: lightcyan;
+}
+
+body {
+	background-image: url(../images/background.png);
+	 background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
