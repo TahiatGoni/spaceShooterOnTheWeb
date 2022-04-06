@@ -13,16 +13,16 @@ var accelerationCounter = 0;
 var spawnVelocity = 0;
 
 class Sprite {
-	constructor({position, velocity, dimensions, color}) {
+	constructor({position, dimensions, imageSrc}) {
 		this.position = position;
-		this.velocity = velocity;
+		
 		this.dimensions = dimensions;
-		this.color = color;
+		this.image = new Image();
+		this.image.src = imageSrc;
 	}
 
 	draw() {
-		c.fillStyle = this.color;
-		c.fillRect(this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
+		c.drawImage(this.image, this.position.x, this.position.y);
 	}
 
 	update() {
@@ -31,9 +31,25 @@ class Sprite {
 
 }
 
+
+const background = new Sprite( {
+	position: {
+		x:0,
+		y:0,
+	},
+	dimensions: {
+		width: canvas.width,
+		height: canvas.height,
+	},
+	imageSrc: './Resources/sprites/background.jpg',
+});
+
+
+
 class LaserBeam extends Sprite {
-	constructor({position, velocity, dimensions, color}) {
-		super({position, velocity, dimensions, color});
+	constructor({position, velocity, dimensions, imageSrc}) {
+		super({position, dimensions, imageSrc});
+		this.velocity = velocity;
 		this.acceleration = 0.025;
 	}
 
@@ -54,8 +70,9 @@ class LaserBeam extends Sprite {
 
 class PlayerSprite extends Sprite {
 
-	constructor({position, velocity, dimensions, color}) {
-		super({position, velocity, dimensions, color});
+	constructor({position, velocity, dimensions, imageSrc}) {
+		super({position, dimensions, imageSrc});
+		this.velocity = velocity;
 		this.acceleration = 0.025;
 		this.halt_flag = true;
 		this.direction = "up";
@@ -171,9 +188,9 @@ class PlayerSprite extends Sprite {
 
 					dimensions: { height: 5,
 
-					width: 5,
+					width: 15,
 					},
-				color: 'red'
+				imageSrc: './Resources/sprites/shot.png'
 				}
 			));
 	}
@@ -182,8 +199,9 @@ class PlayerSprite extends Sprite {
 
 
 class Asteroid extends Sprite{
-	constructor({position, velocity, dimensions, color}) {
-		super({position, velocity, dimensions, color});
+	constructor({position, velocity, dimensions, imageSrc}) {
+		super({position, dimensions, imageSrc});
+		this.velocity = velocity;
 		this.acceleration = -0.001;
 	}	
 
@@ -228,11 +246,11 @@ const player = new PlayerSprite(
 			},
 	velocity: 0,
 
-	dimensions: { height: 50,
+	dimensions: { height: 32,
 
-				width: 150,
+				width: 64,
 			},
-	color: 'green'
+	imageSrc: './Resources/sprites/player.png'
 	}
 );
 
@@ -244,7 +262,7 @@ function animate() {
 	c.fillStyle = 'black';
 	c.fillRect(0,0, canvas.width, canvas.height);
 	window.requestAnimationFrame(animate);
-
+	background.draw();
 	player.update();
 
 	for(let i = 0; i < lasers.length; i++){
@@ -290,10 +308,10 @@ function animate() {
 			velocity: spawnVelocity,
 
 			dimensions: {
-				height: 50,
-				width: 50,
+				height: 27,
+				width: 53,
 			},
-			color: 'grey',
+			imageSrc: './Resources/sprites/enemy.png',
 		}
 
 		);
