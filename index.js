@@ -4,7 +4,14 @@ const c = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 576;
 
+var lives = 3;
+var score = 0;
+
+
 c.fillRect(0,0, canvas.width, canvas.height);
+c.font = "30px Arial";
+c.fillStyle = 'white';
+c.fillText("Press Space to Start!", 400, 250); 
 
 var lasers = [];
 var asteroids = [];
@@ -261,10 +268,17 @@ player.draw();
 function animate() {
 	c.fillStyle = 'black';
 	c.fillRect(0,0, canvas.width, canvas.height);
+	if(lives === 0) {
+		c.font = "30px Arial";
+		c.fillStyle = 'white';
+		c.fillText("Game Over!", 430, 250); 
+		return;
+	}
 	window.requestAnimationFrame(animate);
 	background.draw();
 	player.update();
 
+	
 	for(let i = 0; i < lasers.length; i++){
 		
 	}
@@ -286,6 +300,13 @@ function animate() {
 	for(let i = 0; i < asteroids.length; i++){
 		if(asteroids[i].outOfBounds()){
 			asteroids.splice(i, 1);
+			
+			if(lives >= 1){
+				lives -= 1;
+				document.querySelector("#lives").innerHTML = "Lives : " + lives;
+			}
+			
+
 			console.log("hit");
 		}
 		else{
@@ -335,14 +356,14 @@ function animate() {
 				asteroids.splice(k,1);
 				lasers.splice(i,1);
 				console.log("hit");
+				score += 50;
+				document.querySelector('#score').innerHTML = 'Score: ' + score;
 			}
 		}
 	}
 }
 
 
-
-animate();
 
 window.addEventListener('keydown', (event)=> {
 
@@ -355,7 +376,12 @@ window.addEventListener('keydown', (event)=> {
 		case 'w':
 			player.moveUp();
 			break;
+
+		case ' ':
+			animate();
+			break;
 	}
+
 });
 
 window.addEventListener('keyup', (event)=> {
